@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Target
+  - Reflect
+  - Refract
+  - Teleport
   layers:
   - Default
   - TransparentFX
@@ -40,6 +44,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Blockout
+    uniqueID: 3422683665
+    locked: 0
+  - name: Decoration
+    uniqueID: 3191093177
     locked: 0
   - name: Ray
     uniqueID: 3926622817
