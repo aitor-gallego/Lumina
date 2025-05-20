@@ -8,6 +8,7 @@ TagManager:
   - Reflect
   - Refract
   - Teleport
+  - Tutorial
   layers:
   - Default
   - TransparentFX
@@ -51,11 +52,23 @@ TagManager:
   - name: Decoration
     uniqueID: 3191093177
     locked: 0
+  - name: Objects
+    uniqueID: 804894825
+    locked: 0
   - name: Ray
     uniqueID: 3926622817
     locked: 0
+  - name: Tutorial
+    uniqueID: 1404173541
+    locked: 0
+  - name: Particles
+    uniqueID: 2229172967
+    locked: 0
   - name: Player
     uniqueID: 2508586689
+    locked: 0
+  - name: UI
+    uniqueID: 2620033649
     locked: 0
   m_RenderingLayers:
   - Default

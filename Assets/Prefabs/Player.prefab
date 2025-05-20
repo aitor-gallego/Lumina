@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1786380607
-  m_SortingLayer: 2
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 8793639957104055765, guid: 848413531c948f741a8fc784185f4ba6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 3583482165689064483}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -262,21 +262,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03bfd1ec74a67724a84b52cc3510b628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 8
   acceleration: 20
   deceleration: 20
   velocity: 1
-  jump: 21
+  jump: 17
   coyoteTime: 0.05
   jumpBufferTime: 0.1
+  fallMultiplier: 2.5
+  lowJumpMultiplier: 2
   groundLayer:
     serializedVersion: 2
     m_Bits: 136
   groundCheck: {fileID: 2545114503981097703}
   groundCheckDistance: 0.17
   sprite: {fileID: 7148094753075280755}
-  pushRadio: 0.4
+  pushRadio: 0.25
   boxLayer:
     serializedVersion: 2
     m_Bits: 128
-  holdOffsetX: 0.75
+  holdOffsetX: 0.7
