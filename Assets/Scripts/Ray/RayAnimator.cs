@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class RayAnimator : MonoBehaviour
 {
-    public ParticleSystem startEffect;
-    public ParticleSystem endEffect;
+    public ParticleSystem diff;
+    public ParticleSystem spread;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,16 +19,16 @@ public class RayAnimator : MonoBehaviour
 
     public void Play(Vector2 startPos, Vector2 endPos)
     {
-        if (startEffect != null)
+        if (diff != null)
         {
-            startEffect.transform.position = startPos;
-            startEffect.Play();
+            diff.transform.position = startPos;
+            diff.Play();
         }
 
-        if (endEffect != null)
+        if (spread != null)
         {
-            endEffect.transform.position = endPos;
-            endEffect.Play();
+            spread.transform.position = endPos;
+            spread.Play();
         }
     }
 }

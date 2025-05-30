@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8445640066970564212}
   - component: {fileID: 7702691010868803541}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: gamepad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1424627947864905056}
   - component: {fileID: 5371097771326872108}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: keyboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 3520150005168502303}
   - component: {fileID: 5991824277979600245}
   - component: {fileID: 3286859367326963212}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TutorialTrigger
   m_TagString: Tutorial
   m_Icon: {fileID: 0}
@@ -331,7 +331,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3479817235182156645}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: inputs
   m_TagString: Untagged
   m_Icon: {fileID: 0}

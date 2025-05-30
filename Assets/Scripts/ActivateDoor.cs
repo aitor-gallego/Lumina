@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ActivateDoor : MonoBehaviour
 {
-    private Vector3 origin;
+    private Vector3 start;
     private Vector3 end;
     private BoxCollider2D boxcollider;
     private bool closing = false;
@@ -10,8 +10,8 @@ public class ActivateDoor : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        origin = transform.position;
-        end = origin;
+        start = transform.position;
+        end = start;
         boxcollider = GetComponent<BoxCollider2D>();
     }
 
@@ -20,7 +20,7 @@ public class ActivateDoor : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, end, 2f * Time.deltaTime);
 
-        if (closing && Vector3.Distance(transform.position, origin) < 0.01f)
+        if (closing && Vector3.Distance(transform.position, start) < 0.01f)
         {
             if (boxcollider != null)
                 boxcollider.enabled = true;
@@ -31,14 +31,14 @@ public class ActivateDoor : MonoBehaviour
 
     public void Open()
     {
-        end = origin + Vector3.up * 2f;
+        end = start + Vector3.up * 2f;
         if (boxcollider != null)
             boxcollider.enabled = false;
     }
 
     public void Close()
     {
-        end = origin;
+        end = start;
         closing = true;
     }
 }

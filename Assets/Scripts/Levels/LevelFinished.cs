@@ -3,19 +3,29 @@ using UnityEngine.SceneManagement;
 
 public class LevelFinished : MonoBehaviour
 {
-    public string playertag = "Player";
-    private bool triggered = false;
+    private bool flag = false;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-        if (triggered) return;
 
-        if (other.CompareTag(playertag))
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (flag) return;
+
+        if (collider.CompareTag("Player"))
         {
-            triggered = true;
+            flag = true;
             int currentIndex = SceneManager.GetActiveScene().buildIndex;
             PlayerController.inputBlocked = true;
-            LevelProgress.UnlockLevel(currentIndex + 1);
             SceneTransitionController.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, SceneTransitionController.duration);
         }
     }

@@ -18,8 +18,8 @@ TagManager:
   - UI
   - Player
   - Pushable
-  - Target
-  - 
+  - NoCollisionable
+  - Tutorial
   - 
   - 
   - 

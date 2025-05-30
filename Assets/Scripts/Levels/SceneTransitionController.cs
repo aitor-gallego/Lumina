@@ -43,14 +43,25 @@ public class SceneTransitionController : MonoBehaviour
 
     public void LoadScene(int index, float duration)
     {
-        if (!transitioning)
-            StartCoroutine(FadeOutAndLoad(index, duration));
+        if (transitioning) return;
+
+        string current = SceneManager.GetActiveScene().name;
+        string next = SceneManager.GetSceneByBuildIndex(index).name;
+
+        bool menu = current == "Menu" && next != "Menu";
+        float fadeDuration = menu ? duration * 1.5f : duration;
+
+        StartCoroutine(FadeOutAndLoad(index, fadeDuration, menu));
     }
 
     public void ResetScene()
     {
-        if (!transitioning)
-            StartCoroutine(FadeOutAndLoad(SceneManager.GetActiveScene().buildIndex, resetDuration));
+        if (transitioning) return;
+
+        string current = SceneManager.GetActiveScene().name;
+        bool fromMenu = current == "Menu" ? true : false;
+
+        StartCoroutine(FadeOutAndLoad(SceneManager.GetActiveScene().buildIndex, resetDuration, fromMenu));
     }
 
     private IEnumerator FadeIn(float duration)
@@ -63,13 +74,16 @@ public class SceneTransitionController : MonoBehaviour
             fade.alpha = i / duration;
             yield return null;
         }
+
         fade.alpha = 0f;
         transitioning = false;
     }
 
-    private IEnumerator FadeOutAndLoad(int index, float duration)
+
+    private IEnumerator FadeOutAndLoad(int index, float duration, bool fromMenu)
     {
         transitioning = true;
+
         float i = 0f;
         while (i < duration)
         {
@@ -81,4 +95,5 @@ public class SceneTransitionController : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.1f);
         SceneManager.LoadScene(index);
     }
+
 }

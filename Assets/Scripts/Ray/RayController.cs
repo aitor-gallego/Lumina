@@ -20,10 +20,8 @@ public class RayController : MonoBehaviour
     private bool teleported = false;
     private ActivateDoor lastTarget = null;
     private Vector2? lastImpactPoint = null;
-    private GameObject currentImpactEffect = null;
+    private GameObject currentSpread = null;
     private float minDistance = 0.1f;
-
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -56,6 +54,23 @@ public class RayController : MonoBehaviour
         CastRay();
     }
 
+    void CreateSegment(Vector2 startPos)
+    {
+        var go = new GameObject("RaySegment");
+        go.transform.parent = transform;
+        var lr = go.AddComponent<LineRenderer>();
+
+        lr.startWidth = ray.startWidth;
+        lr.endWidth = ray.endWidth;
+        lr.material = ray.material;
+        lr.positionCount = 1;
+        lr.SetPosition(0, startPos);
+        lr.sortingLayerName = "Ray";
+
+        lines.Add(lr);
+        line = lr;
+    }
+
     void CastRay()
     {
         Vector2 currentOrigin = origin;
@@ -79,9 +94,17 @@ public class RayController : MonoBehaviour
 
             if (hit.collider.CompareTag("Target"))
             {
-                ActivateDoor door = hit.collider.GetComponentInChildren<ActivateDoor>();
-                Target(door);
-                break;
+                Transform parent = hit.collider.transform.parent;
+                if (parent != null)
+                {
+                     ClearSpread();
+                    ActivateDoor door = parent.GetComponentInChildren<ActivateDoor>();
+                    if (door != null)
+                    {
+                        Target(door);
+                        break;
+                    }
+                }
             }
             else if (hit.collider.CompareTag("Reflect"))
             {
@@ -125,9 +148,9 @@ public class RayController : MonoBehaviour
     void Teleport(GameObject collider, ref Vector2 currentOrigin, ref Vector2 currentDirection)
     {
         Portal portal = collider.GetComponent<Portal>();
-        if (portal == null || portal.linkedPortal == null) return;
+        if (portal == null || portal.linked == null) return;
 
-        Transform portal2 = portal.linkedPortal.transform;
+        Transform portal2 = portal.linked.transform;
         Vector2 position = portal2.position;
         Vector2 direction = (-(Vector2)portal2.up).normalized;
 
@@ -135,42 +158,23 @@ public class RayController : MonoBehaviour
         currentDirection = direction;
     }
 
-    void CreateSegment(Vector2 startPos)
-    {
-        var go = new GameObject("RaySegment");
-        go.transform.parent = transform;
-        var lr = go.AddComponent<LineRenderer>();
-
-        lr.startWidth = ray.startWidth;
-        lr.endWidth = ray.endWidth;
-        lr.material = ray.material;
-        lr.positionCount = 1;
-        lr.SetPosition(0, startPos);
-        lr.sortingLayerName = "Ray";
-
-        lines.Add(lr);
-        line = lr;
-    }
-
     void Spread(Vector2 position)
     {
-        if (currentImpactEffect == null)
+        if (currentSpread == null)
         {
-            currentImpactEffect = Instantiate(rayAnimatorTemplate, position, Quaternion.identity);
-            RayAnimator animator = currentImpactEffect.GetComponent<RayAnimator>();
+            currentSpread = Instantiate(rayAnimatorTemplate, position, Quaternion.identity);
+            RayAnimator animator = currentSpread.GetComponent<RayAnimator>();
             if (animator != null)
                 animator.Play(origin, position);
 
             lastImpactPoint = position;
             return;
         }
-
         if (Vector2.Distance(position, lastImpactPoint.Value) > minDistance)
         {
-            Destroy(currentImpactEffect);
-
-            currentImpactEffect = Instantiate(rayAnimatorTemplate, position, Quaternion.identity);
-            RayAnimator animator = currentImpactEffect.GetComponent<RayAnimator>();
+            Destroy(currentSpread);
+            currentSpread = Instantiate(rayAnimatorTemplate, position, Quaternion.identity);
+            RayAnimator animator = currentSpread.GetComponent<RayAnimator>();
             if (animator != null)
                 animator.Play(origin, position);
 
@@ -178,8 +182,22 @@ public class RayController : MonoBehaviour
         }
         else
         {
-            if (currentImpactEffect != null)
-                currentImpactEffect.transform.position = position;
+            currentSpread.transform.position = position;
+
+            RayAnimator animator = currentSpread.GetComponent<RayAnimator>();
+            if (animator != null)
+                animator.Play(origin, position);
+
+            lastImpactPoint = position;
+        }
+    }
+
+    void ClearSpread()
+    {
+        if (currentSpread != null)
+        {
+            Destroy(currentSpread);
+            currentSpread = null;
         }
     }
 
