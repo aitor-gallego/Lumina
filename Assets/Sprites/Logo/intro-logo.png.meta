@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: e2df8f42d900b824fb00da22bffebab0
+guid: 2a275cd0d0346174792de2c450797d68
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7499154508442906066
-    second: box_0
-  - first:
-      213: -4751441601245812612
-    second: box_1
+      213: -2832459959696301834
+    second: intro-logo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -116,45 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Reflector_0
+      name: intro-logo_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
-        height: 16
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 69f17a0c307b5334bb39f0ddca9ac776
-      internalID: -1223003786
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Reflector_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 253b8de23811ae64e8889317b91e3cf5
-      internalID: -1378736956
+      spriteID: 6f0e8c57ca411b8d0800000000000000
+      internalID: -2832459959696301834
       vertices: []
       indices: 
       edges: []
@@ -163,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 0f1908117bcbb7f4fbd55e00fe7f5313
+    spriteID: 4e72d9f6a334ae24fb4db639b104f4ed
     internalID: 0
     vertices: []
     indices: 
@@ -173,8 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Reflector_0: -1223003786
-      Reflector_1: -1378736956
+      intro-logo_0: -2832459959696301834
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

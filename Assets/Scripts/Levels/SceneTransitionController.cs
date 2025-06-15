@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class SceneTransitionController : MonoBehaviour
@@ -19,13 +19,17 @@ public class SceneTransitionController : MonoBehaviour
             return;
         }
 
+        Canvas canvas = fade.GetComponentInParent<Canvas>();
+        if (canvas != null)
+            canvas.sortingOrder = 100;
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Start()
+    void Start()
     {
 
     }
@@ -35,11 +39,18 @@ public class SceneTransitionController : MonoBehaviour
     {
 
     }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        StartCoroutine(FadeIn(duration));
+
+        StartCoroutine(WaitAndFadeIn(2f));
     }
+
+    private IEnumerator WaitAndFadeIn(float duration)
+    {
+        yield return null;
+        yield return StartCoroutine(FadeIn(duration));
+    }
+
 
     public void LoadScene(int index, float duration)
     {
@@ -49,9 +60,9 @@ public class SceneTransitionController : MonoBehaviour
         string next = SceneManager.GetSceneByBuildIndex(index).name;
 
         bool menu = current == "Menu" && next != "Menu";
-        float fadeDuration = menu ? duration * 1.5f : duration;
+        float fadeDuration = menu ? 2f : duration;
 
-        StartCoroutine(FadeOutAndLoad(index, fadeDuration, menu));
+        StartCoroutine(FadeOutAndLoad(index, fadeDuration));
     }
 
     public void ResetScene()
@@ -61,12 +72,14 @@ public class SceneTransitionController : MonoBehaviour
         string current = SceneManager.GetActiveScene().name;
         bool fromMenu = current == "Menu" ? true : false;
 
-        StartCoroutine(FadeOutAndLoad(SceneManager.GetActiveScene().buildIndex, resetDuration, fromMenu));
+        StartCoroutine(FadeOutAndLoad(SceneManager.GetActiveScene().buildIndex, resetDuration));
     }
 
     private IEnumerator FadeIn(float duration)
     {
         transitioning = true;
+        fade.alpha = 1f;
+
         float i = duration;
         while (i > 0f)
         {
@@ -79,10 +92,10 @@ public class SceneTransitionController : MonoBehaviour
         transitioning = false;
     }
 
-
-    private IEnumerator FadeOutAndLoad(int index, float duration, bool fromMenu)
+    private IEnumerator FadeOutAndLoad(int index, float duration)
     {
         transitioning = true;
+        fade.alpha = 0f;
 
         float i = 0f;
         while (i < duration)

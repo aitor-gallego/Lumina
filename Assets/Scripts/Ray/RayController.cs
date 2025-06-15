@@ -11,6 +11,7 @@ public class RayController : MonoBehaviour
 
     [Header("efectos")]
     public GameObject rayAnimatorTemplate;
+    public AudioClip sfx;
 
     // privadas
     private Vector2 origin;
@@ -22,6 +23,9 @@ public class RayController : MonoBehaviour
     private Vector2? lastImpactPoint = null;
     private GameObject currentSpread = null;
     private float minDistance = 0.1f;
+    private GameObject lastParticles = null;
+    private bool targeting = false;
+    private bool sfxplayed = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -50,8 +54,21 @@ public class RayController : MonoBehaviour
         direction = transform.right;
         Target(null);
 
+        targeting = false;
+
         CreateSegment(origin);
         CastRay();
+
+        if (!targeting && lastParticles != null)
+        {
+            lastParticles.SetActive(false);
+            lastParticles = null;
+        }
+
+        if (!targeting && sfxplayed)
+        {
+            sfxplayed = false;
+        }
     }
 
     void CreateSegment(Vector2 startPos)
@@ -86,6 +103,7 @@ public class RayController : MonoBehaviour
                 line.positionCount++;
                 Vector2 endPoint = currentOrigin + currentDirection * 25f;
                 line.SetPosition(line.positionCount - 1, endPoint);
+                ClearSpread();
                 break;
             }
 
@@ -94,10 +112,33 @@ public class RayController : MonoBehaviour
 
             if (hit.collider.CompareTag("Target"))
             {
+                targeting = true;
+                Transform targetTransform = hit.collider.transform;
+                Transform particleTransform = targetTransform.Find("ParticleSystem");
+
+                if (particleTransform != null)
+                {
+                    GameObject particles = particleTransform.gameObject;
+
+                    if (lastParticles != null && lastParticles != particles)
+                    {
+                        lastParticles.SetActive(false);
+                    }
+
+                    particles.SetActive(true);
+                    lastParticles = particles;
+                }
+
+                if (!sfxplayed)
+                {
+                    AudioController.Instance.PlaySFX(sfx);
+                    sfxplayed = true;
+                }
+
                 Transform parent = hit.collider.transform.parent;
                 if (parent != null)
                 {
-                     ClearSpread();
+                    ClearSpread();
                     ActivateDoor door = parent.GetComponentInChildren<ActivateDoor>();
                     if (door != null)
                     {
@@ -105,6 +146,8 @@ public class RayController : MonoBehaviour
                         break;
                     }
                 }
+
+                break;
             }
             else if (hit.collider.CompareTag("Reflect"))
             {

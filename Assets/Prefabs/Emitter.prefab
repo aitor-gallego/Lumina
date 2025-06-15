@@ -9882,6 +9882,7 @@ MonoBehaviour:
   maxBounces: 5
   ray: {fileID: 8187883264933996214}
   rayAnimatorTemplate: {fileID: 7957794823960524165}
+  sfx: {fileID: 8300000, guid: 8b637185a940098418681f8d88988c59, type: 3}
 --- !u!114 &177406340576531698
 MonoBehaviour:
   m_ObjectHideFlags: 0

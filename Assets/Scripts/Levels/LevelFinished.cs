@@ -19,14 +19,22 @@ public class LevelFinished : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (flag) return;
+        if (flag)
+            return;
 
-        if (collider.CompareTag("Player"))
-        {
-            flag = true;
-            int currentIndex = SceneManager.GetActiveScene().buildIndex;
-            PlayerController.inputBlocked = true;
-            SceneTransitionController.Instance.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, SceneTransitionController.duration);
-        }
+        if (!collider.CompareTag("Player"))
+            return;
+
+        flag = true;
+        PlayerController.inputBlocked = true;
+
+        float time = LevelTimer.Instance.GetTime();
+        LevelTimer.Instance.StopTimer();
+
+        string name = SceneManager.GetActiveScene().name;
+        int index = SceneManager.GetActiveScene().buildIndex;
+
+        DataController.Instance.SaveLevel(name, time, index);
+        SceneTransitionController.Instance.LoadScene(index + 1, SceneTransitionController.duration);
     }
 }
