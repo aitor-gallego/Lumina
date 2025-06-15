@@ -1,12 +1,12 @@
 
 # LUMINA
 
-Descargar segunda entrega **v0.3** en **Releases**
+Disponible la **versión 1.0** en *Releases*
 
 
 # SHOWCASE
 
-https://youtu.be/cQ95sdWfBdk
+https://youtu.be/lM7BvFvZS_U
 
 
 # LICENCIA
